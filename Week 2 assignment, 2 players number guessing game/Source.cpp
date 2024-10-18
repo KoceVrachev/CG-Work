@@ -3,6 +3,8 @@
 #include <string>
 using namespace std;
 
+PrintOutcome(bool isCorrect);
+
 int main() 
 {
 
@@ -27,32 +29,28 @@ int main()
         cout << "Alright " << name << ", let's begin!" << endl << endl;
 
         int randomNumber = 1 + rand() % 10;
-        int guess, attempts = 3;
-
-        while (attempts > 0) 
+        int guess;
+        //, attempts = 3;
+        const unsigned int Attempts = 3;
+        bool isCorrectGuess = false;
+        //while (attempts > 0 || isCorrectGuess == false) 
+        for(unsigned int currentAttempt = 1; currentAttempt <= Attempts; currentAttempt++)
         {
             cout << "Give me your guess: ";
             cin >> guess;
+            isCorrectGuess = (guess == randomNumber);
 
-            if (guess == randomNumber) 
+            if(isCorrectGuess)
             {
-                cout << "Lol! Correct! You won!" << endl << endl;
                 break;
             }
             else 
             {
-                attempts = attempts - 1;
-
-                if (attempts > 0) 
-                {
-                    cout << "Oops! Wrong guess! You have " << attempts << " left. Please try again." << endl << endl;
-                }
-                else 
-                {
-                    cout << "No way! You ran out of guesses! Game over! The number was " << randomNumber << "." << endl << endl;
-                }
+                cout << "Oops! Wrong guess! You have " << (Attempts - currentAttempt) << " left. Please try again." << endl << endl;
             }
         }
+
+        PrintOutcome(isCorrectGuess);
     }
     else if (typeOfGame == kPvsP) 
     {
@@ -95,4 +93,16 @@ int main()
         }
     }
     return 0;
+}
+
+PrintOutcome(bool isCorrect)
+{
+    if(isCorrect)
+    {
+        cout << "Congrats!" << endl;
+    }
+    else
+    {
+       cout << "No way! You ran out of guesses! Game over! The number was " << randomNumber << "." << endl << endl;
+    }
 }
